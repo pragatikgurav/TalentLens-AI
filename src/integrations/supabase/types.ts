@@ -14,7 +14,167 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      candidates: {
+        Row: {
+          certifications: string[]
+          companies: string[]
+          created_at: string
+          education: Json
+          education_match: number
+          email: string | null
+          experience_match: number
+          experience_years: number | null
+          id: string
+          job_id: string
+          keyword_match: number
+          location: string | null
+          match_score: number
+          matched_skills: string[]
+          missing_skills: string[]
+          name: string | null
+          phone: string | null
+          projects: Json
+          recommendation: string | null
+          resume_text: string
+          skill_match: number
+          skills: string[]
+          soft_skills: string[]
+          status: string
+          strengths: string[]
+          summary: string | null
+          technical_skills: string[]
+          user_id: string
+          weaknesses: string[]
+        }
+        Insert: {
+          certifications?: string[]
+          companies?: string[]
+          created_at?: string
+          education?: Json
+          education_match?: number
+          email?: string | null
+          experience_match?: number
+          experience_years?: number | null
+          id?: string
+          job_id: string
+          keyword_match?: number
+          location?: string | null
+          match_score?: number
+          matched_skills?: string[]
+          missing_skills?: string[]
+          name?: string | null
+          phone?: string | null
+          projects?: Json
+          recommendation?: string | null
+          resume_text: string
+          skill_match?: number
+          skills?: string[]
+          soft_skills?: string[]
+          status?: string
+          strengths?: string[]
+          summary?: string | null
+          technical_skills?: string[]
+          user_id: string
+          weaknesses?: string[]
+        }
+        Update: {
+          certifications?: string[]
+          companies?: string[]
+          created_at?: string
+          education?: Json
+          education_match?: number
+          email?: string | null
+          experience_match?: number
+          experience_years?: number | null
+          id?: string
+          job_id?: string
+          keyword_match?: number
+          location?: string | null
+          match_score?: number
+          matched_skills?: string[]
+          missing_skills?: string[]
+          name?: string | null
+          phone?: string | null
+          projects?: Json
+          recommendation?: string | null
+          resume_text?: string
+          skill_match?: number
+          skills?: string[]
+          soft_skills?: string[]
+          status?: string
+          strengths?: string[]
+          summary?: string | null
+          technical_skills?: string[]
+          user_id?: string
+          weaknesses?: string[]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "candidates_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      jobs: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          keywords: string[]
+          min_experience_years: number | null
+          preferred_skills: string[]
+          required_skills: string[]
+          title: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          id?: string
+          keywords?: string[]
+          min_experience_years?: number | null
+          preferred_skills?: string[]
+          required_skills?: string[]
+          title: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          keywords?: string[]
+          min_experience_years?: number | null
+          preferred_skills?: string[]
+          required_skills?: string[]
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
