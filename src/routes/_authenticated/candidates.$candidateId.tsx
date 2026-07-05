@@ -312,7 +312,7 @@ function CandidateDetail() {
                 Education
               </h2>
               <ul className="mt-3 space-y-2 text-sm">
-                {(candidate.education ?? []).map((e: any, i: number) => (
+                {((candidate.education ?? []) as Array<{ degree?: string; institution?: string; year?: string }>).map((e, i) => (
                   <li key={i}>
                     <p className="font-medium">{e.degree ?? "—"}</p>
                     <p className="text-xs text-muted-foreground">
@@ -320,7 +320,7 @@ function CandidateDetail() {
                     </p>
                   </li>
                 ))}
-                {(candidate.education ?? []).length === 0 && (
+                {((candidate.education ?? []) as unknown[]).length === 0 && (
                   <li className="text-sm text-muted-foreground">No education found.</li>
                 )}
               </ul>
@@ -345,14 +345,14 @@ function CandidateDetail() {
               </div>
             )}
 
-            {!!candidate.projects?.length && (
+            {!!((candidate.projects ?? []) as unknown[]).length && (
               <div className="rounded-2xl border border-border/60 bg-card p-6 shadow-soft">
                 <h2 className="flex items-center gap-2 text-lg font-semibold">
                   <FolderKanban className="h-4 w-4 text-primary" />
                   Projects
                 </h2>
                 <ul className="mt-3 space-y-3 text-sm">
-                  {candidate.projects.map((p: any, i: number) => (
+                  {((candidate.projects ?? []) as Array<{ name?: string; description?: string }>).map((p, i) => (
                     <li key={i}>
                       <p className="font-medium">{p.name ?? "Project"}</p>
                       <p className="text-xs text-muted-foreground">{p.description ?? ""}</p>
