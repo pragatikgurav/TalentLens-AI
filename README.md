@@ -29,7 +29,7 @@ Secure and seamless onboarding experience supporting traditional email and OAuth
 
 | Create Account | Welcome Back / Sign In |
 |:---:|:---:|
-| <img src="./Screenshot 2026-07-06 104350.png" width="100%" alt="Sign Up Screen"/> | <img src="./Screenshot 2026-07-06 104400.png" width="100%" alt="Sign In Screen"/> |
+| <img src="https://github.com/user-attachments/assets/76fcb9ec-8bff-4979-80f5-40b9e9d6df14" width="375" alt="Create Account"/> | <img src="https://github.com/user-attachments/assets/2c173c67-6b51-4d7b-ac71-149cebbdb666" width="375" alt="Welcome Back"/> |
 
 ---
 
@@ -37,7 +37,7 @@ Secure and seamless onboarding experience supporting traditional email and OAuth
 View your active job postings, track candidate counts at a glance, and create new requirements instantly.
 
 <p align="center">
-  <img src="./Screenshot 2026-07-06 104501.png" width="95%" alt="Dashboard Overview"/>
+  <img src="https://github.com/user-attachments/assets/d9ccec96-4b5f-4b5d-97fc-aa7c2f37dddc" width="100%" alt="Dashboard"/>
 </p>
 
 ---
@@ -46,7 +46,7 @@ View your active job postings, track candidate counts at a glance, and create ne
 Automatically rank multiple applications based on their semantic similarity scores, highlighting top talent instantly.
 
 <p align="center">
-  <img src="./Screenshot 2026-07-06 104515.png" width="95%" alt="Candidate Ranking View"/>
+  <img src="https://github.com/user-attachments/assets/038655d0-14d6-4c46-bf76-789021b878dc" width="100%" alt="Candidate Pipeline"/>
 </p>
 
 ---
@@ -55,7 +55,7 @@ Automatically rank multiple applications based on their semantic similarity scor
 An analytical breakdown featuring a skill radar chart, automated strengths/gaps identification, and an AI-generated fit recommendation.
 
 <p align="center">
-  <img src="./Screenshot 2026-07-06 104556.png" width="85%" alt="Detailed Profile Analysis"/>
+  <img src="https://github.com/user-attachments/assets/a3d39878-1352-42f9-937c-54a422ba146e" width="75%" alt="Match Analysis"/>
 </p>
 
 ---
