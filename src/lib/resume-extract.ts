@@ -1,6 +1,5 @@
 // Client-side resume text extraction for PDF, DOCX, and plain text files.
 import * as pdfjs from "pdfjs-dist";
-// @ts-expect-error - worker imported as URL by Vite
 import pdfWorker from "pdfjs-dist/build/pdf.worker.min.mjs?url";
 
 pdfjs.GlobalWorkerOptions.workerSrc = pdfWorker;
@@ -41,7 +40,7 @@ async function extractPdf(file: File): Promise<string> {
 }
 
 async function extractDocx(file: File): Promise<string> {
-  const mammoth = await import("mammoth/mammoth.browser");
+  const mammoth: any = await import("mammoth/mammoth.browser" as string);
   const buf = await file.arrayBuffer();
   const result = await mammoth.extractRawText({ arrayBuffer: buf });
   return result.value.trim();
