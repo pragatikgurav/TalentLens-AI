@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { ArrowLeft, Upload, Sparkles, Search, Trash2 } from "lucide-react";
 import { analyzeResume } from "@/lib/screening.functions";
+import { extractResumeText } from "@/lib/resume-extract";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -309,22 +310,26 @@ function AddCandidateDialog({ jobId, onDone }: { jobId: string; onDone: () => vo
     onError: (e: Error) => toast.error(e.message),
   });
 
+  const [extracting, setExtracting] = useState(false);
   const readTextFile = useCallback(async (file: File) => {
-    if (file.size > 2 * 1024 * 1024) {
-      toast.error("File too large (max 2MB). Paste text instead.");
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error("File too large (max 10MB).");
       return;
     }
-    const isText =
-      file.type.startsWith("text/") ||
-      /\.(txt|md|rtf|csv)$/i.test(file.name);
-    if (!isText) {
-      toast.info(
-        "For best results, paste resume text. Binary files (PDF/DOCX) aren't supported yet — copy the text from the file and paste below.",
-      );
-      return;
+    setExtracting(true);
+    try {
+      const text = await extractResumeText(file);
+      if (!text || text.trim().length < 30) {
+        toast.error("Could not extract text from this file. Try another format or paste manually.");
+        return;
+      }
+      setResumeText(text);
+      toast.success(`Extracted ${text.length.toLocaleString()} characters from ${file.name}`);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Failed to read file");
+    } finally {
+      setExtracting(false);
     }
-    const text = await file.text();
-    setResumeText(text);
   }, []);
 
   return (
@@ -338,8 +343,8 @@ function AddCandidateDialog({ jobId, onDone }: { jobId: string; onDone: () => vo
         <DialogHeader>
           <DialogTitle>Add a candidate</DialogTitle>
           <DialogDescription>
-            Drop a .txt file or paste the full resume text. AI will parse and score it against
-            this job.
+            Drop a PDF, DOCX, or TXT resume — or paste text below. AI will parse and score it
+            against this job.
           </DialogDescription>
         </DialogHeader>
 
@@ -363,15 +368,17 @@ function AddCandidateDialog({ jobId, onDone }: { jobId: string; onDone: () => vo
           <div className="mx-auto grid h-10 w-10 place-items-center rounded-lg bg-primary/10 text-primary">
             <Upload className="h-5 w-5" />
           </div>
-          <p className="mt-2 text-sm font-medium">Drop a resume file here</p>
+          <p className="mt-2 text-sm font-medium">
+            {extracting ? "Extracting text…" : "Drop a resume file here"}
+          </p>
           <p className="mt-0.5 text-xs text-muted-foreground">
-            Plain text works best — or paste below
+            PDF, DOCX, or TXT — up to 10MB
           </p>
           <input
             ref={fileRef}
             type="file"
             className="hidden"
-            accept=".txt,.md,text/plain"
+            accept=".pdf,.docx,.txt,.md,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain"
             onChange={(e) => {
               const file = e.target.files?.[0];
               if (file) readTextFile(file);
