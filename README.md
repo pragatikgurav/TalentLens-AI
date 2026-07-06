@@ -2,7 +2,11 @@
 
 An intelligent, NLP-powered applicant tracking and resume screening system that automatically parses candidate resumes, extracts core features, and ranks them against job descriptions with deep analytical insights.
 
-🔗 **[Live Demo](https://pragatikgurav.github.io/TalentLens-AI/)**
+<p align="center">
+  <a href="https://pragatikgurav.github.io/TalentLens-AI/">
+    <img src="https://img.shields.io/badge/🚀%20Live%20Demo-Click%20Here%20to%20View-blueviolet?style=for-the-badge&logo=vercel" alt="Live Demo" />
+  </a>
+</p>
 
 ---
 
@@ -18,14 +22,14 @@ TalentLens AI simplifies the recruitment workflow by leveraging Natural Language
 
 ---
 
-## 📸 App Walkthrough & Screenshots
+## 📸 Application Screenshots
 
 ### 1. Authentication Flow
 Secure and seamless onboarding experience supporting traditional email and OAuth options.
 
 | Create Account | Welcome Back / Sign In |
 |:---:|:---:|
-| <img src="https://raw.githubusercontent.com/pragatikgurav/TalentLens-AI/main/Screenshot%202026-07-06%20104350.png" width="100%" alt="Sign Up Screen"/> | <img src="https://raw.githubusercontent.com/pragatikgurav/TalentLens-AI/main/Screenshot%202026-07-06%20104400.png" width="100%" alt="Sign In Screen"/> |
+| <img src="./Screenshot 2026-07-06 104350.png" width="100%" alt="Sign Up Screen"/> | <img src="./Screenshot 2026-07-06 104400.png" width="100%" alt="Sign In Screen"/> |
 
 ---
 
@@ -33,7 +37,7 @@ Secure and seamless onboarding experience supporting traditional email and OAuth
 View your active job postings, track candidate counts at a glance, and create new requirements instantly.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/pragatikgurav/TalentLens-AI/main/Screenshot%202026-07-06%20104501.png" width="90%" alt="Dashboard Overview"/>
+  <img src="./Screenshot 2026-07-06 104501.png" width="95%" alt="Dashboard Overview"/>
 </p>
 
 ---
@@ -42,7 +46,7 @@ View your active job postings, track candidate counts at a glance, and create ne
 Automatically rank multiple applications based on their semantic similarity scores, highlighting top talent instantly.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/pragatikgurav/TalentLens-AI/main/Screenshot%202026-07-06%20104515.png" width="90%" alt="Candidate Ranking View"/>
+  <img src="./Screenshot 2026-07-06 104515.png" width="95%" alt="Candidate Ranking View"/>
 </p>
 
 ---
@@ -51,7 +55,7 @@ Automatically rank multiple applications based on their semantic similarity scor
 An analytical breakdown featuring a skill radar chart, automated strengths/gaps identification, and an AI-generated fit recommendation.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/pragatikgurav/TalentLens-AI/main/Screenshot%202026-07-06%20104556.png" width="85%" alt="Detailed Profile Analysis"/>
+  <img src="./Screenshot 2026-07-06 104556.png" width="85%" alt="Detailed Profile Analysis"/>
 </p>
 
 ---
