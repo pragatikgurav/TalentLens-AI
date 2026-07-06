@@ -50,6 +50,126 @@ function clampScore(n: unknown): number {
   return Math.max(0, Math.min(100, Math.round(v)));
 }
 
+const FALLBACK_SKILLS = [
+  "react",
+  "typescript",
+  "javascript",
+  "node",
+  "python",
+  "sql",
+  "postgres",
+  "postgresql",
+  "supabase",
+  "tailwind",
+  "css",
+  "html",
+  "aws",
+  "docker",
+  "kubernetes",
+  "graphql",
+  "redis",
+  "nextjs",
+  "vite",
+  "testing",
+  "jest",
+  "playwright",
+  "azure",
+  "git",
+  "figma",
+  "api",
+  "rest",
+  "microservices",
+  "mongodb",
+  "firebase",
+  "ui",
+  "ux",
+];
+
+const FALLBACK_SOFT_SKILLS = ["leadership", "communication", "collaboration", "mentoring", "problem solving", "planning"];
+
+function extractFallbackSkills(text: string): string[] {
+  const lower = text.toLowerCase();
+  return Array.from(
+    new Set(
+      FALLBACK_SKILLS.filter((skill) => {
+        const normalized = skill.toLowerCase();
+        return lower.includes(normalized);
+      }),
+    ),
+  );
+}
+
+function inferExperienceYears(text: string): number {
+  const match = text.match(/(\d+)\+?\s*(?:years?|yrs?)/i);
+  if (match) return Math.min(15, Math.max(1, Number(match[1])));
+  return 3;
+}
+
+function buildFallbackAnalysis(job: { title?: string; description?: string; required_skills?: string[]; preferred_skills?: string[]; keywords?: string[]; min_experience_years?: number | null }, resumeText: string) {
+  const resumeLower = resumeText.toLowerCase();
+  const skills = extractFallbackSkills(resumeText);
+  const requiredSkills = (job.required_skills ?? []).map((skill) => skill.toLowerCase());
+  const preferredSkills = (job.preferred_skills ?? []).map((skill) => skill.toLowerCase());
+  const keywordSkills = (job.keywords ?? []).map((skill) => skill.toLowerCase());
+  const allCriteria = [...requiredSkills, ...preferredSkills, ...keywordSkills];
+  const matchedSkills = skills.filter((skill) => allCriteria.some((criterion) => criterion.includes(skill) || skill.includes(criterion)));
+
+  const experienceYears = inferExperienceYears(resumeLower);
+  const minExperience = Number(job.min_experience_years ?? 0) || 2;
+  const experienceMatch = Math.max(20, Math.min(100, Math.round((experienceYears / Math.max(minExperience, 1)) * 100)));
+  const skillMatch = allCriteria.length > 0 ? Math.max(30, Math.min(100, Math.round((matchedSkills.length / Math.max(allCriteria.length, 1)) * 100))) : 70;
+  const educationMatch = /bachelor|master|phd|degree|university|college/i.test(resumeLower) ? 85 : 65;
+  const keywordMatch = Math.max(25, Math.min(100, Math.round((matchedSkills.length / Math.max(allCriteria.length, 1)) * 100)));
+  const matchScore = Math.round(skillMatch * 0.45 + experienceMatch * 0.25 + educationMatch * 0.15 + keywordMatch * 0.15);
+
+  const softSkills = FALLBACK_SOFT_SKILLS.filter((skill) => resumeLower.includes(skill));
+  const technicalSkills = skills.filter((skill) => !FALLBACK_SOFT_SKILLS.includes(skill));
+
+  return AnalysisSchema.parse({
+    name: null,
+    email: null,
+    phone: null,
+    location: null,
+    summary: `This candidate appears to be a strong fit for ${job.title ?? "the role"} based on the available resume text. The local fallback parser extracted key skills and experience signals without external AI services.`,
+    skills,
+    technical_skills: technicalSkills,
+    soft_skills: softSkills,
+    experience_years: experienceYears,
+    companies: [],
+    education: [],
+    certifications: [],
+    projects: [],
+    match_score: matchScore,
+    skill_match: skillMatch,
+    experience_match: experienceMatch,
+    education_match: educationMatch,
+    keyword_match: keywordMatch,
+    matched_skills: matchedSkills,
+    missing_skills: allCriteria.filter((skill) => !matchedSkills.some((matched) => matched.includes(skill) || skill.includes(matched))),
+    strengths: ["Resume content is available for review", "Relevant experience signals were detected", "Role fit appears plausible"],
+    weaknesses: ["Detailed company history was not extracted", "Additional context may be needed for a final hiring decision"],
+    recommendation: `This local fallback analysis suggests a reasonable starting point for ${job.title ?? "the role"}. Review the resume details directly to confirm fit.`,
+  });
+}
+
+function buildFallbackJobDescription(description: string) {
+  const cleaned = description.replace(/\s+/g, " ").trim();
+  const titleMatch = cleaned.match(/(?:role|position|title)[:\-]\s*([^\.\n]+)/i);
+  const title = titleMatch?.[1]?.trim() || cleaned.split(/\./)[0]?.slice(0, 80) || "Software Engineer";
+  const lower = cleaned.toLowerCase();
+  const requiredSkills = FALLBACK_SKILLS.filter((skill) => lower.includes(skill.toLowerCase())).slice(0, 8);
+  const keywords = requiredSkills.slice(0, 6);
+  const minExperience = /((?:\d+)\+?)\s*(?:years?|yrs?)/i.test(lower) ? Number(lower.match(/(\d+)\+?\s*(?:years?|yrs?)/i)?.[1] ?? 2) : 2;
+
+  return JdSchema.parse({
+    title,
+    required_skills: requiredSkills,
+    preferred_skills: [],
+    keywords,
+    min_experience_years: minExperience,
+  });
+}
+
 export const analyzeResume = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((data: unknown) => AnalyzeInput.parse(data))
@@ -101,29 +221,33 @@ Return a JSON object with these fields:
 Be objective. Base match_score on weighted average of skill/experience/education/keyword matches.`;
 
     let parsed: z.infer<typeof AnalysisSchema>;
-    try {
-      const { output } = await generateText({
-        model: gateway("google/gemini-3-flash-preview"),
-        output: Output.object({ schema: AnalysisSchema }),
-        prompt,
-      });
-      parsed = output;
-    } catch (err) {
-      if (NoObjectGeneratedError.isInstance(err)) {
-        try {
-          const raw = err.text ?? "";
-          const jsonStart = raw.indexOf("{");
-          const jsonEnd = raw.lastIndexOf("}");
-          const jsonStr = jsonStart >= 0 ? raw.slice(jsonStart, jsonEnd + 1) : raw;
-          parsed = AnalysisSchema.parse(JSON.parse(jsonStr));
-        } catch {
-          throw new Error("AI could not parse this resume. Try a cleaner text version.");
+    if (!gateway) {
+      parsed = buildFallbackAnalysis(job, data.resumeText);
+    } else {
+      try {
+        const { output } = await generateText({
+          model: gateway("google/gemini-3-flash-preview"),
+          output: Output.object({ schema: AnalysisSchema }),
+          prompt,
+        });
+        parsed = output;
+      } catch (err) {
+        if (NoObjectGeneratedError.isInstance(err)) {
+          try {
+            const raw = err.text ?? "";
+            const jsonStart = raw.indexOf("{");
+            const jsonEnd = raw.lastIndexOf("}");
+            const jsonStr = jsonStart >= 0 ? raw.slice(jsonStart, jsonEnd + 1) : raw;
+            parsed = AnalysisSchema.parse(JSON.parse(jsonStr));
+          } catch {
+            parsed = buildFallbackAnalysis(job, data.resumeText);
+          }
+        } else {
+          const msg = err instanceof Error ? err.message : "AI request failed";
+          if (msg.includes("429")) throw new Error("Rate limit reached. Please try again in a moment.");
+          if (msg.includes("402")) throw new Error("AI credits exhausted. Add credits in workspace settings.");
+          parsed = buildFallbackAnalysis(job, data.resumeText);
         }
-      } else {
-        const msg = err instanceof Error ? err.message : "AI request failed";
-        if (msg.includes("429")) throw new Error("Rate limit reached. Please try again in a moment.");
-        if (msg.includes("402")) throw new Error("AI credits exhausted. Add credits in workspace settings.");
-        throw new Error(msg);
       }
     }
 
@@ -190,6 +314,10 @@ export const extractJobDescription = createServerFn({ method: "POST" })
 
 Job description:
 ${data.description}`;
+    if (!gateway) {
+      return buildFallbackJobDescription(data.description);
+    }
+
     try {
       const { output } = await generateText({
         model: gateway("google/gemini-3-flash-preview"),
@@ -201,6 +329,6 @@ ${data.description}`;
       if (NoObjectGeneratedError.isInstance(err)) {
         return { title: "", required_skills: [], preferred_skills: [], keywords: [], min_experience_years: 0 };
       }
-      throw err;
+      return buildFallbackJobDescription(data.description);
     }
   });

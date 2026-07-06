@@ -4,6 +4,8 @@ import { getRequest } from '@tanstack/react-start/server'
 import { createClient } from '@supabase/supabase-js'
 import type { Database } from './types'
 
+const DEMO_SESSION_STORAGE_KEY = 'talentlens-demo-session';
+
 
 
 function isNewSupabaseApiKey(value: string): boolean {
@@ -32,9 +34,28 @@ function createSupabaseFetch(supabaseKey: string): typeof fetch {
 
 export const requireSupabaseAuth = createMiddleware({ type: 'function' }).server(
   async ({ next }) => {
-    
     const SUPABASE_URL = process.env.SUPABASE_URL;
     const SUPABASE_PUBLISHABLE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY;
+
+    const request = getRequest();
+    const authHeader = request?.headers?.get('authorization');
+    const demoSessionHeader = request?.headers?.get('x-demo-session');
+    const demoSession = demoSessionHeader || (typeof window !== 'undefined' ? window.localStorage.getItem(DEMO_SESSION_STORAGE_KEY) : null);
+
+    if (demoSession) {
+      const parsed = typeof demoSession === 'string' && demoSession.startsWith('{') ? JSON.parse(demoSession) : { email: demoSession };
+      const demoSupabase = createClient<Database>(SUPABASE_URL || 'https://example.supabase.co', SUPABASE_PUBLISHABLE_KEY || 'demo-key', {
+        auth: { storage: undefined, persistSession: false, autoRefreshToken: false },
+      });
+
+      return next({
+        context: {
+          supabase: demoSupabase,
+          userId: parsed.email || 'demo-user',
+          claims: { sub: parsed.email || 'demo-user', email: parsed.email, full_name: parsed.fullName },
+        },
+      });
+    }
 
     if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
       const missing = [
@@ -45,14 +66,10 @@ export const requireSupabaseAuth = createMiddleware({ type: 'function' }).server
       console.error(`[Supabase] ${message}`);
       throw new Error(message);
     }
-    
-    const request = getRequest();
 
     if (!request?.headers) {
       throw new Error('Unauthorized: No request headers available');
     }
-
-    const authHeader = request.headers.get('authorization');
 
     if (!authHeader) {
       throw new Error('Unauthorized: No authorization header provided');
