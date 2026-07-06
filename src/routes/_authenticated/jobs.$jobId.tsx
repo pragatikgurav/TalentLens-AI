@@ -22,7 +22,7 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/jobs/$jobId")({
-  head: () => ({ meta: [{ title: "Job — TalentLens" }] }),
+  head: () => ({ meta: [{ title: "Job — TalentLens AI" }] }),
   component: JobDetail,
 });
 

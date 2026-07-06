@@ -22,7 +22,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
-  head: () => ({ meta: [{ title: "Dashboard — TalentLens" }] }),
+  head: () => ({ meta: [{ title: "Dashboard — TalentLens AI" }] }),
   component: Dashboard,
 });
 
@@ -147,7 +147,7 @@ function EmptyState() {
       </div>
       <h3 className="mt-4 text-lg font-semibold">Create your first job</h3>
       <p className="mt-1 max-w-sm text-sm text-muted-foreground">
-        Paste a job description and TalentLens will extract required skills and start ranking
+        Paste a job description and TalentLens AI will extract required skills and start ranking
         candidates for you.
       </p>
     </div>

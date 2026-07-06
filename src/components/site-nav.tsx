@@ -28,7 +28,7 @@ export function SiteNav({ variant = "landing" }: { variant?: "landing" | "app" }
           <div className="grid h-9 w-9 place-items-center rounded-xl gradient-primary-bg shadow-elegant">
             <Sparkles className="h-5 w-5 text-primary-foreground" />
           </div>
-          <span className="text-lg font-semibold tracking-tight">TalentLens</span>
+          <span className="text-lg font-semibold tracking-tight">TalentLens AI</span>
         </Link>
 
         {variant === "landing" && !email && (

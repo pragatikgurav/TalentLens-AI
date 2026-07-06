@@ -12,7 +12,7 @@ import { GradientBlobs } from "@/components/gradient-blobs";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Sign in — TalentLens" },
+      { title: "Sign in — TalentLens AI" },
       { name: "description", content: "Sign in to your TalentLens AI resume screening workspace." },
     ],
   }),
@@ -83,7 +83,7 @@ function AuthPage() {
           <div className="grid h-9 w-9 place-items-center rounded-xl gradient-primary-bg shadow-elegant">
             <Sparkles className="h-5 w-5 text-primary-foreground" />
           </div>
-          <span className="text-lg font-semibold">TalentLens</span>
+          <span className="text-lg font-semibold">TalentLens AI</span>
         </Link>
 
         <div className="glass-panel rounded-2xl p-8 shadow-elegant animate-fade-up">

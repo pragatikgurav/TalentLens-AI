@@ -28,7 +28,7 @@ import {
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/candidates/$candidateId")({
-  head: () => ({ meta: [{ title: "Candidate — TalentLens" }] }),
+  head: () => ({ meta: [{ title: "Candidate — TalentLens AI" }] }),
   component: CandidateDetail,
 });
 

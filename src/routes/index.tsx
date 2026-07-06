@@ -177,7 +177,7 @@ function Landing() {
 
       <footer className="border-t border-border/50 py-8">
         <div className="mx-auto max-w-7xl px-6 text-center text-sm text-muted-foreground">
-          © {new Date().getFullYear()} TalentLens. Built with Lovable.
+          © {new Date().getFullYear()} TalentLens AI. Built with Lovable.
         </div>
       </footer>
     </div>
