@@ -22,7 +22,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
-  head: () => ({ meta: [{ title: "Dashboard — TalentLens" }] }),
+  head: () => ({ meta: [{ title: "Dashboard — TalentLens AI" }] }),
   component: Dashboard,
 });
 

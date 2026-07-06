@@ -72,14 +72,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "TalentLens — AI Resume Screening & Candidate Ranking" },
+      { title: "TalentLens AI — Resume Screening & Candidate Ranking" },
       {
         name: "description",
         content:
           "Parse resumes, extract skills and experience, and rank candidates against any job description with AI-powered semantic matching.",
       },
-      { name: "author", content: "TalentLens" },
-      { property: "og:title", content: "TalentLens — AI Resume Screening" },
+      { name: "author", content: "TalentLens AI" },
+      { property: "og:title", content: "TalentLens AI — Resume Screening" },
       {
         property: "og:description",
         content:
