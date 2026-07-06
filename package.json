@@ -9,8 +9,10 @@
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "deploy:pages": "gh-pages -d dist"
   },
+  "homepage": "https://pragatikgurav.github.io/TalentLens-AI",
   "dependencies": {
     "@ai-sdk/openai-compatible": "^3.0.5",
     "@hookform/resolvers": "^5.2.2",
@@ -83,6 +85,7 @@
     "eslint-plugin-prettier": "^5.2.6",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
+    "gh-pages": "^6.3.0",
     "globals": "^15.15.0",
     "nitro": "3.0.260603-beta",
     "prettier": "^3.7.3",
