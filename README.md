@@ -3,8 +3,8 @@
 An intelligent, NLP-powered applicant tracking and resume screening system that automatically parses candidate resumes, extracts core features, and ranks them against job descriptions with deep analytical insights.
 
 <p align="center">
-  <a href="https://pragatikgurav.github.io/TalentLens-AI/">
-    <img src=" https://resume-quest-match.lovable.app" alt="Live Demo" />
+  <a href="https://resume-quest-match.lovable.app">
+    <img src="https://img.shields.io/badge/Live%20Demo-⚡%20Open%20App-blueviolet?style=for-the-badge&logo=vercel" alt="Live Demo" />
   </a>
 </p>
 
@@ -64,7 +64,7 @@ An analytical breakdown featuring a skill radar chart, automated strengths/gaps 
 
 * **Frontend:** React.js, Tailwind CSS, Lucide Icons, Chart.js (Radar Mapping)
 * **Backend & Parsing:** Python / Node.js, NLP Architecture (TF-IDF / Embeddings)
-* **Deployment:** GitHub Pages (Frontend Demo)
+* **Deployment:** Lovable / GitHub Pages
 
 ---
 
