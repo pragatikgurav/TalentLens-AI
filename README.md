@@ -4,7 +4,7 @@ An intelligent, NLP-powered applicant tracking and resume screening system that 
 
 <p align="center">
   <a href="https://pragatikgurav.github.io/TalentLens-AI/">
-    <img src="https://img.shields.io/badge/🚀%20Live%20Demo-Click%20Here%20to%20View-blueviolet?style=for-the-badge&logo=vercel" alt="Live Demo" />
+    <img src=" https://resume-quest-match.lovable.app" alt="Live Demo" />
   </a>
 </p>
 
