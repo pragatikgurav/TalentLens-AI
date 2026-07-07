@@ -41,12 +41,12 @@ function Landing() {
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Button asChild size="lg" className="gradient-primary-bg shadow-elegant">
-                <a href="https://resume-quest-match.lovable.app/" target="_blank" rel="noreferrer">
-                  Open output page <ArrowRight className="ml-1 h-4 w-4" />
+                <a href="https://pragatikgurav.github.io/TalentLens-AI/" target="_blank" rel="noreferrer">
+                  Open project <ArrowRight className="ml-1 h-4 w-4" />
                 </a>
               </Button>
               <Button asChild size="lg" variant="outline" className="glass-panel">
-                <a href="https://resume-quest-match.lovable.app/">Open live demo</a>
+                <a href="https://pragatikgurav.github.io/TalentLens-AI/">Open project</a>
               </Button>
             </div>
             <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
