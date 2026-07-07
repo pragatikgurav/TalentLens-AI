@@ -41,12 +41,12 @@ function Landing() {
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Button asChild size="lg" className="gradient-primary-bg shadow-elegant">
-                <Link to="/auth">
-                  Get started <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
+                <a href="https://resume-quest-match.lovable.app/" target="_blank" rel="noreferrer">
+                  Open output page <ArrowRight className="ml-1 h-4 w-4" />
+                </a>
               </Button>
               <Button asChild size="lg" variant="outline" className="glass-panel">
-                <Link to="/auth">Upload a resume</Link>
+                <a href="https://resume-quest-match.lovable.app/">Open live demo</a>
               </Button>
             </div>
             <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
@@ -59,8 +59,20 @@ function Landing() {
           </div>
 
           {/* Preview card */}
-          <div className="relative mx-auto mt-16 max-w-5xl animate-fade-up" style={{ animationDelay: "0.2s" }}>
-            <div className="glass-panel rounded-2xl p-2 shadow-elegant">
+          <div
+            id="output-preview"
+            className="relative mx-auto mt-16 max-w-5xl scroll-mt-24 animate-fade-up"
+            style={{ animationDelay: "0.2s" }}
+          >
+            <div className="mb-4 text-center">
+              <p className="text-sm font-semibold uppercase tracking-[0.25em] text-primary">
+                Output preview
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                See how candidate ranking and match scores appear in the live screening workflow.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-white/70 bg-white/80 p-2 shadow-[0_20px_60px_-24px_rgba(79,70,229,0.35)] backdrop-blur-xl">
               <div className="rounded-xl border border-border/50 bg-card p-6">
                 <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border/50 pb-4">
                   <div>
